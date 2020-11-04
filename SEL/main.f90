@@ -26,44 +26,31 @@ program principal
     write(*, *)
     call mostrarMatriz(term_ind)
     write(*, *)
+    read(*, *)
+    call Menu(matriz, term_ind, xini)
 
-    write(*, *) "Solucion Gauss:"
-    call mostrarMatriz(solucionGauss(matriz, term_ind))
-    write(*, *)
+!    write(*, *) "Solucion Gauss:"
+!    call mostrarMatriz(solucionGauss(matriz, term_ind))
+!    write(*, *)
 
-    write(*, *) "Solucion Gauss iterativo:"
-    call mostrarMatriz(refinamientoIter(matriz, term_ind, 0.000000000001_8, solucionGauss, mNormaM))
-    write(*, *)
+!    write(*, *) "Solucion Gauss iterativo:"
+!    call mostrarMatriz(refinamientoIter(matriz, term_ind, 0.000000000001_8, solucionGauss, mNormaM))
+!    write(*, *)
 
-    write(*, *) "Jacobi:"
-    call mostrarMatriz(jacobi(matriz, term_ind, xini, 0.000000000001_8))
-    write(*, *)
+!    write(*, *) "Jacobi:"
+!    call mostrarMatriz(jacobi(matriz, term_ind, xini, 0.000000000001_8))
+!    write(*, *)
 
-    write(*, *) "Gauss Seidel:"
-    call mostrarMatriz(gaussSeidel(matriz, term_ind, xini, 0.000000000001_8))
-    write(*, *)
+!    write(*, *) "Gauss Seidel:"
+!    call mostrarMatriz(gaussSeidel(matriz, term_ind, xini, 0.000000000001_8))
+!    write(*, *)
 
-    write(*, *) "Relajacion:"
-    call mostrarMatriz(relajacion(matriz, term_ind, xini, 0.000000000001_8))
-    write(*, *)
+!    write(*, *) "Relajacion:"
+!    call mostrarMatriz(relajacion(matriz, term_ind, xini, 0.000000000001_8))
+!    write(*, *)
 
-    matriz2(1, 1) = 1.
-    matriz2(1, 2) = 0.
-    matriz2(1, 3) = 0.
-    matriz2(2, 1) = 2.
-    matriz2(2, 2) = 1.
-    matriz2(2, 3) = 0.
-    matriz2(3, 1) = -1.
-    matriz2(3, 2) = -2.
-    matriz2(3, 3) = -1.
-    write(*, *) "Matriz original:"
-    call mostrarMatriz(matriz2)
-    write(*, *)
-    write(*, *) "Matriz inversa:"
-    call mostrarMatriz(matrizInversa(matriz2))
-    write(*, *)
-    write(*, *) "Chequeo matriz inversa:"
-    call mostrarMatriz(matmul(matriz2, matrizInversa(matriz2)))
+!    write(*, *) "Chequeo matriz inversa:"
+!    call mostrarMatriz(matmul(matriz2, matrizInversa(matriz2)))
 
 contains
 
@@ -81,6 +68,7 @@ contains
             write(*, *) "3 - Jacobi"
             write(*, *) "4 - Gauss Seidel"
             write(*, *) "5 - Matriz inversa"
+            write(*, *) "6 - Numero de Condicion"
             write(*, *) "0 - Salir"
 
             read (*, *) select
@@ -111,8 +99,13 @@ contains
                     write(*, *) "Matriz Inversa"
                     write(*, *) "--------------"
                     call mostrarMatriz(matrizInversa(matriz))
+                case (6)
+                    write(*, *) "-------------------"
+                    write(*, *) "Numero de condicion"
+                    write(*, *) "-------------------"
+                    write(*, "(f20.15)") condicion(matriz, mNormaM) !MODIFICAR NORMA SI HACE FALTA
                 case (0)
-                    write(*, *) "Saliendo"
+                    write(*, *) "Saliendo..."
                     op = .false.
             end select
 
