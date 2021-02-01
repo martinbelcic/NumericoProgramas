@@ -14,7 +14,7 @@ program ejercicio
     allocate(ini(11))
     ini = 15.
     x0 = 0.
-    xf = 0.1
+    xf = 1.
     t0 = 0.
     tf = 3600.
     particionx = 10
@@ -49,7 +49,7 @@ function cDerecha(pp, i)
     type(ProblemaParabolicas), intent(in) :: pp
     integer(4), intent(in) :: i
     real(8) cDerecha
-    real(8), parameter :: h = 186., k = 37.2, Tinf = 1400. 
+    real(8), parameter :: h = 186., k = 37.2, Tinf = 1400. !Modificar temperatura inferior
 
     cDerecha = (pp%u(i - 1) + pp%dx * h * Tinf / k) / (1 + pp%dx * h / k)
 end function cDerecha

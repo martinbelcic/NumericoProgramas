@@ -12,31 +12,31 @@ program principal
     type(frontera), dimension(:), allocatable :: superior, inferior, izquierda, derecha
 
     x0 = 0.
-    x1 = 20.
+    x1 = 12.
     y0 = 0.
-    y1 = 10.
-    n = 141
-    m = 61
+    y1 = 15.
+    n = 4 !horizontal
+    m = 5 !vertical
     orden = (n - 1) * (m - 1)
 
     allocate(superior(1:n-1), inferior(1:n-1))
     allocate(izquierda(1:m-1), derecha(1:m-1))
     
-    si%valor = 0.
+    si%valor = 20.
     sd%valor = 100.
-    ii%valor = 0.
+    ii%valor = 20.
     id%valor = 100.
     si%tipo = DIRICHLET
     sd%tipo = DIRICHLET
     ii%tipo = DIRICHLET
     id%tipo = DIRICHLET
 
-    superior%valor = 0.
-    inferior%valor = 0.
-    izquierda%valor = 0.
+    superior%valor = 20.
+    inferior%valor = 20.
+    izquierda%valor = 20.
     derecha%valor = 100.
-    superior%tipo = NEUMANN
-    inferior%tipo = NEUMANN
+    superior%tipo = DIRICHLET
+    inferior%tipo = DIRICHLET
     izquierda%tipo = DIRICHLET
     derecha%tipo = DIRICHLET
     distribucion = elipticas(x0, x1, y0, y1, n, m, &

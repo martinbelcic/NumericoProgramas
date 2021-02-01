@@ -3,13 +3,14 @@ program principal
 
     implicit none
 
-    integer(4), parameter :: cant_ec = 1 !Modificar
+    integer(4), parameter :: cant_ec = 2 !Modificar
     character(len=*), parameter :: archivo = "datos.dat"
     real(8) v(0:cant_ec)
 
     !ACA SE TOQUETEA EL VECTOR
-    v(0) = -5.
-    v(1) = 25.
+    v(0) = 0.
+    v(1) = 1.
+    v(2) = 0.
 
     call menu(v, archivo)
     !call iterar(eulerSimple, fp, v, h, estrategia1, tol, xf, archivo)
@@ -37,7 +38,8 @@ contains
         real(8) v(0:), fp(0:size(v) - 1)
 
         fp(0) = 1       ! Variable independiente
-        fp(1) = 2.*v(0) 
+        fp(1) = v(2)
+        fp(2) = 0.05*v(2) - 0.15*v(1)
     end function fp
 
     subroutine plot(archivo)
@@ -53,7 +55,8 @@ contains
         write(2, *) "set title 'E2'"
         write(2, *) "set xlabel 'x'"
         write(2, *) "set ylabel 'f(x)'"
-        write(2, *) "plot '", archivo, "' using 1:2 title 'metodo' with linespoints"
+        write(2, *) "plot '", archivo, "' using 1:2 title 'metodo' with lines,\"
+        write(2, *) " '", archivo, "' using 1:3 title 'otro' with lines"
         call system('gnuplot -persist temporal.p')
         close(2, STATUS='DELETE')
     end subroutine plot
@@ -73,6 +76,7 @@ contains
             write(*, *) "3 - Euler Mejorado"
             write(*, *) "4 - Runge Kutta 4"
             write(*, *) "5 - Runge Kutta Felhberg"
+            write(*, *) "6 - Plotear"
             write(*, *) "0 - Salir"
 
             read(*, *) select
@@ -108,6 +112,11 @@ contains
                     write(*, *) "--------------------"
                     met => rkf
                     call submenuMetodo(met, v, archivo)
+                case (6)
+                    write(*, *) "---------"
+                    write(*, *) "Ploteando"
+                    write(*, *) "---------"
+                    call plot(archivo)
                 case (0)
                     write(*, *) "Saliendo"
                     op = .false.
